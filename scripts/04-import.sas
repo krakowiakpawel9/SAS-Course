@@ -50,6 +50,11 @@ proc import datafile="/folders/myfolders/SAS-Course/data/np_traffic.csv"
 proc contents data=traffic;
 run;
 
+/* Wrangling storm_damage dataset */
+proc print data=pg1.storm_damage;
+	format Date ddmmyy10. Cost dollar16. Deaths comma5.;
+run;
+
 /*
 Look at the difference between two piece of code: guessingrows=max; allows to read
 format of columns based on all tables. In the opposite the above piece of code truncates some values in rows.
@@ -59,4 +64,13 @@ proc import datafile="/folders/myfolders/SAS-Course/data/np_traffic.csv"
 	guessingrows=max;
 
 proc contents data=traffic;
+run;
+
+proc print data=pg1.storm_summary(obs=10);
+	format Lat Lon 4. StartDate date11. EndDate date9.;
+run;
+
+proc freq data=pg1.storm_summary order=freq;
+	tables StartDate;
+	format StartDate Monname.;
 run;
