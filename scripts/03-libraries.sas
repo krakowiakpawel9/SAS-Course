@@ -24,3 +24,37 @@ libname out "/folders/myfolders/SAS-Course/output";
 data class_copy_1 out.class_copy_2;
 	set sashelp.class;
 run;
+
+libname out clear;
+
+/* Using library to read Excel files */
+/* Options validvarname allows to unify naming convention, replaces space to underscore and truncates names
+greater then 32 characters */
+options validvarname=v7;
+libname xl_lib xlsx "/folders/myfolders/SAS-Course/data/class.xlsx";
+
+proc print data=xl_lib.class;
+run;
+
+libname xl_lib clear;
+
+/* Second example with reading Excel file */
+options validvarname=v7;
+libname xlstorm xlsx "/folders/myfolders/SAS-Course/data/storm.xlsx";
+
+proc contents data=xlstorm.storm_summary;
+run;
+
+libname xlstorm clear;
+
+/* Third example with Excel files */
+options validvarname=v7;
+libname np xlsx "/folders/myfolders/SAS-Course/data/np_info.xlsx";
+
+proc print data=np.parks(obs=10);
+proc print data=np.species(obs=10);
+proc print data=np.visits(obs=10);
+proc contents data=np.parks;
+run;
+libname np clear;
+
