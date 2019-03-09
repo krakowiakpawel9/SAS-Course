@@ -66,3 +66,20 @@ data eu_occ2016;
 	format Hotel ShortStay Camp comma17.;
 	drop Geo;
 run;
+
+/* Homework solution 2 */
+proc print data=pg1.np_species(obs=10);
+run;
+
+libname out "/folders/myfolders/SAS-Course/output";
+
+data fox out.fox;
+	set pg1.np_species;
+	where Category="Mammal" and Common_Names like '%Fox%' and Common_Names not 
+		like '%Squirrel';
+	drop Category Record_Status Occurrence Nativeness;
+run;
+
+proc sort data=fox;
+	by Common_Names;
+run;
