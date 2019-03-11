@@ -108,5 +108,4 @@ data cars;
 		CarType="Basic";
 	else
 		CarType="Luxury";
-	
 run;
