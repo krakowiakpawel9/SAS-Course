@@ -1,3 +1,12 @@
+*********************************************
+*	IF expression THEN statement;
+*	<ELSE IF expression THEN statement;>
+*	<ELSE IF expression THEN statement;>
+*	ELSE statement;
+*********************************************
+
+
+
 data test;
 	input model $ type $ MSRP;
 	datalines;
