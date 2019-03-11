@@ -1,6 +1,8 @@
 /* Segmenting reports
 First step: sort by values which you want to divide dataset
-Second step: use proc freq procedure to display corresponding tables */
+Second step: use proc freq procedure to display corresponding tables
+To display labels add 'label' statement, to hide number of observations
+add 'noobs' statement in the proc step */
 data cars;
 	length type $ 10;
 	input name $ type $ origin $ price;
