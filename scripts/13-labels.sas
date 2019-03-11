@@ -1,8 +1,8 @@
 *********************************************************
 *	Adding labels:
-*   label col-name="label-text";
+*       label col-name="label-text";
 * 	If you want to add label in you proc print statement
-*   you must add 'label' statement
+*       you must add 'label' statement
 *********************************************************;
 
 data dirty_id_country;
