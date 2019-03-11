@@ -1,3 +1,11 @@
+*********************************
+*	Define macro variable
+*	%let var=value;
+*
+*	reference to macro var
+*	title "Sorted by &var";
+*********************************;
+
 data dirty_id_country;
 	input id $ name $;
 	datalines;
