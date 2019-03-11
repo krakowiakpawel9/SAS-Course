@@ -24,7 +24,16 @@ proc sort data=cars out=cars_sort;
 	by origin;
 run;
 
+proc sort data=cars out=cars_sort;
+	by origin descending price;
+run;
+
 proc freq data=cars_sort order=freq;
 	by origin;
 	tables type;
+run;
+
+proc print data=cars_sort label;
+	by origin;
+	label type="Car Type" name="Car Name" price="Price in USD";
 run;
