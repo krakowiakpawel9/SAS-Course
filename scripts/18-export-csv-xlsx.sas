@@ -43,8 +43,7 @@ ods csvall close;
 *	Exporting results to Excel
 ******************************
 *	Syntax:
-
-	*		ODS EXCEL FILE='filename.xlsx' STYLE=style OPTIONS(SHEET_NAME='label');
+*		ODS EXCEL FILE='filename.xlsx' STYLE=style OPTIONS(SHEET_NAME='label');
 *		<sas code>
 *		ODS EXCEL CLOSE;
 ******************************;
