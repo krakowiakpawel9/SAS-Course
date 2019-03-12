@@ -187,3 +187,63 @@ run;
 proc freq data=np_summary_cond;
 	tables ParkType;
 run;
+
+/* Practice Solution 5 */
+data parks monuments;
+	set pg1.np_summary;
+
+	if type='NM' then
+		output monuments;
+
+	if type='NP' then
+		output parks;
+run;
+
+/* Practice Solution 6 */
+data parks monuments;
+	set pg1.np_summary;
+	Campers = sum(OtherCamping, TentCampers, RVCampers, BackcountryCampers);
+	format Campers comma12.;
+	if type='NM' then do;
+	    ParkType='Monument';
+		output monuments;
+	end;
+
+	if type='NP' then do;
+		ParkType='Park';
+		output parks;
+	end;
+	keep Reg ParkName DayVisits OtherLodging Campers ParkType;
+run;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
