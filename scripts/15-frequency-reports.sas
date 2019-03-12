@@ -17,18 +17,7 @@
 *
 *	Additional:
 *		"ods noproctitle" statements allows to hide default title
-
-
-
-
-
-
-
-
-
-
-
-										******************************************************;
+******************************************************;
 
 data test;
 	input model $ type $ price;
