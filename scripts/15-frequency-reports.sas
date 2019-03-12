@@ -145,3 +145,37 @@ proc freq data=devices_list noprint;
 	tables flag*date / out=dev_count;
 	format date monname.;
 run;
+
+title "Storm Analysis";
+title2 "Summary Stats";
+
+proc means data=pg1.storm_final;
+	var MaxWindMPH MinPressure;
+run;
+
+title2 "Frequency report";
+
+proc freq data=pg1.storm_final;
+	tables BasinName;
+run;
+
+/* Next Example */
+proc freq data=pg1.storm_final order=freq noprint;
+	tables StartDate / out=storm_count ;
+	tables BasinName / out=basin_count;
+	format StartDate monname.;
+run;
+
+/* Next Example */
+proc print data=pg1.np_species(obs=10);
+run;
+
+proc freq data=pg1.np_species order=freq;
+	tables Category / nocum;
+run;
+
+ods graphics on;
+proc freq data=pg1.np_species order=freq;
+	tables Category / nocum plots=freqplot();
+	where substr(Species_ID, 1, 4)="EVER";
+run;
