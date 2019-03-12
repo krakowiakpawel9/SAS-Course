@@ -100,3 +100,50 @@ proc freq data=shoes_proc order=data;
 	tables Product / plots=freqplot();
 run;
 
+data rain;
+	input date daily_rain ytd_rain;
+	informat date date9.;
+	datalines;
+01JAN2017 0.01 0.01
+02JAN2017 1.29 1.3
+03JAN2017 0 1.3
+04JAN2017 0 1.3
+05JAN2017 0.27 1.57
+;
+run;
+
+proc print data=rain;
+run;
+
+/* Creating accumulating cloumn
+Use 'retain Run_Total 0' to make running columns
+retain keep value each time PDV is initialized
+RETAIN cloumn <initial-value>; */
+data rain_running_total;
+	set rain;
+	retain Run_Total 0;
+	Run_Total=Run_Total + daily_rain;
+run;
+
+data rain2;
+	set rain_running_total;
+	TotalRain=sum(ytd_rain, run_total);
+run;
+
+data rain3;
+	set rain_running_total;
+	TotalRain=ytd_rain + run_total;
+run;
+
+proc print data=sashelp.shoes;
+run;
+
+proc sql;
+	select distinct Region from sashelp.shoes;
+quit;
+
+/* Sorting Data to output tables with only desirable columns */
+proc sort data=sashelp.shoes out=shoes_sort(keep=Product Sales);
+	by descending Sales;
+run;
+
