@@ -99,3 +99,24 @@ data xl_lib.storm_final;
 run;
 
 libname xl_lib clear;
+
+/* Another Example */
+
+ods excel file="/home/krakowiakpawel90/EPG194/output/pressure.xlsx";
+title "Minimum Pressure Statistics by Basin";
+ods noproctitle;
+
+proc means data=pg1.storm_final mean median min maxdec=0;
+	class BasinName;
+	var MinPressure;
+run;
+
+title "Correlation of Minimum Pressure and Maximum Wind";
+
+proc sgscatter data=pg1.storm_final;
+	plot minpressure*maxwindmph;
+run;
+
+title;
+ods excel close;
+ods proctitle;
