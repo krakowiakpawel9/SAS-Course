@@ -1,0 +1,12 @@
+1. Visualising Financial Data, Julie Rodriguez, Piotr Kaczmarek
+2. Visualisation That Means Something, Nathan Yau
+3. SAS Viya The Python Perspective, Kevin D.Smith, Xiangxiang Meng
+4. Practical Data Analysis, Hector Cuesta
+5. Building Machine Learning Systems in Python, Willi Richert, Luis Pedro Coelho
+6. The Elements of Statistical Learning, Data Mining, Inference and Prediction, Trevor Hastie, Robert Tibshiriani
+7. Springer Texts in Statistics, G. Casella, S. Fienberg, http://www-bcf.usc.edu/~gareth/ISL/index.html
+
+SAS:
+1. SAS Macro Programming Made Easy, Michele Burlew
+2. Proc SQL by Example, Using SQL within SAS, Howard Schreier
+
