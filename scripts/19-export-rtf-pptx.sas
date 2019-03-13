@@ -58,3 +58,39 @@ run;
 proc means data=test;
 run;
 ods rtf close;
+
+/* Next Example */
+ods powerpoint file="/home/krakowiakpawel90/EPG194/output/pressure.pptx" style=powerpointlight;
+
+title "Minimum Pressure Statistics by Basin";
+ods noproctitle;
+proc means data=pg1.storm_final mean median min maxdec=0;
+    class BasinName;
+    var MinPressure;
+run;
+
+title "Correlation of Minimum Pressure and Maximum Wind";
+proc sgscatter data=pg1.storm_final;
+	plot minpressure*maxwindmph;
+run;
+title;  
+
+ods powerpoint close;
+
+
+ods rtf file="/home/krakowiakpawel90/EPG194/output/pressure.rtf" style=powerpointlight startpage=NO;
+
+title "Minimum Pressure Statistics by Basin";
+ods noproctitle;
+proc means data=pg1.storm_final mean median min maxdec=0;
+    class BasinName;
+    var MinPressure;
+run;
+
+title "Correlation of Minimum Pressure and Maximum Wind";
+proc sgscatter data=pg1.storm_final;
+	plot minpressure*maxwindmph;
+run;
+title;  
+
+ods rtf close;
