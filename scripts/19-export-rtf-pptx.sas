@@ -94,3 +94,31 @@ run;
 title;  
 
 ods rtf close;
+
+/* Next Example */
+ods rtf file="/folders/myfolders/SAS-Course/output/parkreport_2.rtf" 
+	style=journal startpage=no;
+ods noproctitle;
+options nodate;
+title "US National Park Regional Usage Summary";
+
+proc freq data=pg1.np_final;
+	tables Region /nocum;
+run;
+
+proc means data=pg1.np_final mean median max nonobs maxdec=0;
+	class Region;
+	var DayVisits Campers;
+run;
+
+title2 'Day Visits vs. Camping';
+
+proc sgplot data=pg1.np_final;
+	vbar Region / response=DayVisits;
+	vline Region / response=Campers;
+run;
+
+title;
+ods rtf close;
+ods proctitle;
+options date;
