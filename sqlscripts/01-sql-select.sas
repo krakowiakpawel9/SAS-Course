@@ -24,3 +24,11 @@ proc sql;
 quit;
 
 title;
+
+/* Next Example */
+title "Most Costly Storms";
+
+proc sql;
+	select Event, Cost format=dollar16., year(Date) as Season from 
+		pg1.storm_damage where Cost > 25000000000 order by Cost desc;
+quit;
