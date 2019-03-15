@@ -68,3 +68,30 @@ title "Accumulating Traffic Totals for Park Types";
 proc print data=parkTypeTraffic;
 	var ParkType ParkName Count MonumentTraffic ParkTraffic;
 run;
+
+/* Next Example */
+proc sort data=sashelp.shoes out=sorted_shoes;
+	by Region Product;
+run;
+
+data profit_summary;
+	set sorted_shoes;
+	by Region Product;
+	Profit=Sales - Returns;
+
+	if first.Product=1 then
+		TotalProfit=0;
+	TotalProfit + Profit;
+run;
+
+data profit_summary(keep=Region Product TotalProfit);
+	set sorted_shoes;
+	by Region Product;
+	format TotalProfit dollar20.;
+	Profit=Sales - Returns;
+
+	if first.Product=1 then
+		TotalProfit=0;
+	TotalProfit + Profit;
+	if last.Product = 1;
+run;
