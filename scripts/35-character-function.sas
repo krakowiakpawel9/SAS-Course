@@ -78,3 +78,34 @@ data storm_damage2;
 	CategoryLoc=find(Summary, 'category', 'i');
 	*if CategoryLoc > 0 then Category=substr(Summary,CategoryLoc, 10);
 run;
+
+libname pg2 "/home/krakowiakpawel90/EPG294/data";
+
+proc print data=pg2.np_monthlytraffic(obs=10);
+proc contents data=pg2.np_monthlytraffic;
+run;
+
+data clean_traffic;
+	set pg2.np_monthlytraffic;
+	drop year;
+	length Type $ 5;
+	ParkType=scan(ParkName, -1, ' ');
+	ParkName=scan(ParkName, 1, ' ');
+	Location=propcase(Location);
+	Region=compress(upcase(Region));
+	*putlog "After ParkType assignment";
+	*putlog ParkName $quote40. Region $quote40.;
+run;
+
+/* Homework Assignment */
+data parks;
+	set pg2.np_monthlytraffic;
+	where ParkName like '%NP';
+	Park=substr(ParkName, 1, find(ParkName, "NP") - 2);
+	Location=compbl(propcase(Location));
+	Gate=tranwrd(Location, 'Traffic Count At ', ' ');
+	GateCode = catx('-', ParkCode, Gate);
+run;
+
+proc print data=parks;
+run;
