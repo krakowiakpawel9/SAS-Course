@@ -165,3 +165,32 @@ data two;
 	merge update_sort teachers_sort;
 	by name;
 run;
+
+/* Homework Solution */
+proc print data=pg2.np_2016(obs=10);
+proc print data=pg2.np_codelookup(obs=10);
+run;
+
+proc sql;
+	create table parkStats as select * from pg2.np_2016 y inner join 
+		pg2.np_codelookup c on y.parkcode=c.parkcode;
+quit;
+
+/* Using SAS Merge */
+proc sort data=pg2.np_CodeLookup
+          out=work.sortedCodes;
+    by ParkCode;
+run;
+
+proc sort data=pg2.np_2016
+          out=work.sorted_code_2016;
+    by ParkCode;
+run;
+
+data work.parkStats(keep=ParkCode ParkName Year Month DayVisits)
+     work.parkOther(keep=ParkCode ParkName);
+    merge work.sorted_code_2016(in=inStats) work.sortedCodes;
+    by ParkCode;
+    if inStats=1 then output work.parkStats;
+    else output work.parkOther;
+run;
