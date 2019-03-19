@@ -1,0 +1,48 @@
+libname ctryxl xlsx 
+	"/folders/myfolders/SAS-Course/practicalSAS/data/country_lookup.xlsx";
+
+proc print data=ctryxl.countries(obs=30);
+run;
+
+/* Sort values to show if there are any duplicats */
+proc freq data=ctryxl.countries order=freq;
+	tables Country_Key Country_Name;
+run;
+
+/* Subseting rows where frequency was grater than one */
+proc print data=ctryxl.countries;
+	where Country_Key in ('AG', 'CF', 'GB', 'US');
+run;
+
+/* Extracting the duplicate rows */
+proc sort data=ctryxl.countries out=country_clean nodupkey dupout=dups;
+	by Country_Key;
+run;
+
+*******************************
+Validate Imported Orders Table
+*******************************;
+
+proc print data=cr.orders(obs=10);
+run;
+
+/* Rules of thumbs: check date, for example StartDate < EndDate */
+proc print data=cr.orders;
+	where Order_Date > Delivery_Date;
+	var Order_ID Order_Date Delivery_Date;
+run;
+
+proc freq data=cr.orders;
+	tables Order_Type Customer_Country Customer_Continent;
+run;
+
+proc contents data=cr.orders;
+run;
+
+proc means data=cr.orders maxdec=0;
+	var Quantity Retail_Price Cost_Price;
+run;
+
+proc univariate data=cr.orders;
+	var Quantity Retail_Price Cost_Price;
+run;
