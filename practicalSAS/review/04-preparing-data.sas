@@ -48,3 +48,75 @@ proc sql;
 		inner join cr.country_clean cc on p.Customer_Country=cc.Country_Key order by 
 		Order_Date desc;
 quit;
+
+/* Homework Solution */
+proc print data=sashelp.holiday;
+run;
+
+data holiday2019;
+	set sashelp.holiday;
+	where end=. and rule=0;
+	CountryCode=substr(Category, 4, 6);
+	Date=mdy(month, day, 2019);
+	keep Desc Country Date CountryCode;
+run;
+
+proc freq data=holiday2019;
+	tables CountryCode;
+run;
+
+/* Homework Solution */
+proc print data=sales(obs=50);
+run;
+
+data sales;
+	set cr.employee;
+	length SalesLevel $ 10;
+	where department='Sales' and TermDate=.;
+	Country=upcase(Country);
+
+	if substr(Jobtitle, 12)='I' then
+		SalesLevel='Entry';
+	else if substr(JobTitle, 12) in ('II', 'III') then
+		SalesLevel='Middle';
+	else
+		SalesLevel='Senior';
+run;
+
+proc freq data=sales;
+	tables SalesLevel;
+run;
+
+/* Homework Solution */
+proc print data=cr.employee(obs=20);
+run;
+
+data bonus;
+	set cr.employee;
+	where TermDate=.;
+	YearsEmp=yrdif(HireDate, '01JAN2019'd, 'AGE');
+	format YearsEmp 3.;
+
+	if YearsEmp > 10 then
+		do;
+			Bonus=0.03*Salary;
+			Vacation=20;
+		end;
+	else
+		do;
+			Bonus=0.02*Salary;
+			Vacation=15;
+		end;
+run;
+
+proc print data=bonus;
+run;
+
+proc sort data=bonus;
+	by descending YearsEmp;
+run;
+
+proc freq data=bonus;
+	tables Vacation;
+run;
+
