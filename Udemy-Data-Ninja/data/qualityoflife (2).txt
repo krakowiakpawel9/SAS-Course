@@ -1,0 +1,7 @@
+Rich 17
+Rich 16
+Poor 7
+Poor 9
+Poor 4
+Rich 15
+Rich 15

@@ -18,7 +18,7 @@ run;
 /* Preparing data  */
 data profit;
 	set cr.orders;
-	length Orders_Source $8;
+	length Order_Source $8;
 	where Delivery_Date >=Order_Date;
 	Customer_Country=upcase(Customer_Country);
 
@@ -88,16 +88,15 @@ proc freq data=sales;
 run;
 
 /* Homework Solution */
-proc print data=cr.employee(obs=20);
+proc contents data=cr.employee;
 run;
 
 data bonus;
 	set cr.employee;
-	where TermDate=.;
-	YearsEmp=yrdif(HireDate, '01JAN2019'd, 'AGE');
-	format YearsEmp 3.;
+	where TermDate is missing;
+	YearsEmp=yrdif(HireDate, '01JAN2019'd, "AGE");
 
-	if YearsEmp > 10 then
+	if YearsEmp >=10 then
 		do;
 			Bonus=0.03*Salary;
 			Vacation=20;
@@ -109,14 +108,13 @@ data bonus;
 		end;
 run;
 
-proc print data=bonus;
-run;
-
 proc sort data=bonus;
 	by descending YearsEmp;
+run;
+
+proc print data=bonus;
 run;
 
 proc freq data=bonus;
 	tables Vacation;
 run;
-
