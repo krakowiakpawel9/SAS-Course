@@ -215,3 +215,108 @@ run;
 
 proc print data=all;
 run;
+
+*	merge using set;
+
+data sales;
+	input Name$ Sales_1-Sales_4;
+	total=sum(of Sales_1-Sales_4);
+	cards;
+Greg 10 2 40 0
+John 15 5 10 100
+Mark 20 0 3 10
+;
+run;
+
+data sales2;
+	input Name$ Sales_1-Sales_4;
+	total=sum(of Sales_1-Sales_4);
+	cards;
+Greg 10 2 40 0
+John 15 5 10 100
+Mark 20 0 3 10
+;
+run;
+
+data all_two;
+	set sales sales2;
+run;
+
+proc print data=all_two;
+run;
+
+*	next example, different column names;
+
+data sales;
+	input Name$ Sales_1-Sales_4;
+	total=sum(of Sales_1-Sales_4);
+	cards;
+Greg 10 2 40 0
+John 15 5 10 100
+Mark 20 0 3 10
+;
+run;
+
+data sales2;
+	input Names$ Sales_1-Sales_4;
+	total=sum(of Sales_1-Sales_4);
+	cards;
+Greg 10 2 40 0
+John 15 5 10 100
+Mark 20 0 3 10
+;
+run;
+
+data all_two;
+	set sales sales2(rename=(Names=Name));
+run;
+
+proc print data=all_two;
+run;
+
+*	keep statement;
+
+proc print data=sales;
+run;
+
+data reduction;
+	set sales;
+	keep Name Sales_1;
+run;
+
+*	drop statement;
+
+data reduction;
+	set sales;
+	drop Name total;
+run;
+
+data nhouse;
+	input x $ y z;
+	datalines;
+Single 300000 0.20
+Single 250000 0.25
+Duplex 175000 0.15
+;
+run;
+
+*	rename option;
+
+data clean;
+	set nhouse;
+	rename x=type y=price z=tax;
+run;
+
+*	label option;
+
+data labeled_data;
+	set clean;
+	label type="Type of Home" price="Price of Home" tax="Tax Percentage of Home";
+run;
+
+proc print data=labeled_data label;
+run;
+
+proc freq data=labeled_data;
+	tables type price tax;
+run;
