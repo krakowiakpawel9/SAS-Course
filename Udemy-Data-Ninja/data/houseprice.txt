@@ -1,3 +1,7 @@
 Single 300000 0.20
 Single 250000 0.25
 Duplex 175000 0.15
+Single 180000 0.14
+Single 190000 0.16
+Duplex 250000 0.20
+Duplex 300000 0.21
